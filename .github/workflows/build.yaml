@@ -5,7 +5,6 @@ on:
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+*'
 # Must commit, tag then push to start the build
-
 jobs:
   build:
     strategy:
