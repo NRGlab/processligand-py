@@ -47,4 +47,7 @@ skip = [
     "*-musllinux*",
 ]
 
+[tool.cibuildwheel.linux]
+before-build = "yum install -y glibc-static libstdc++-static"
+
 environment-pass = ["CIBW_BUILD"]

@@ -5,23 +5,16 @@ project(processligand_builder C)
 
 include(FetchContent)
 
-set(PROCESSLIGAND_EXE_PATH "" CACHE FILEPATH "Path to the pre-compiled ProcessLigand executable")
-# Automatically append .exe on Windows if it's missing
-if(WIN32)
-    if(NOT "${PROCESSLIGAND_EXE_PATH}" MATCHES "\\.exe$")
-        set(PROCESSLIGAND_EXE_PATH "${PROCESSLIGAND_EXE_PATH}.exe" CACHE FILEPATH "Path to the pre-compiled ProcessLigand executable" FORCE)
-    endif()
-endif()
-
-if(NOT PROCESSLIGAND_EXE_PATH)
-    message(FATAL_ERROR "Path to ProcessLigand not set. Please set PROCESSLIGAND_EXE_PATH.")
-endif()
-
-add_executable(ProcessLigand IMPORTED GLOBAL)
-
-set_target_properties(ProcessLigand PROPERTIES
-    IMPORTED_LOCATION "${PROCESSLIGAND_EXE_PATH}"
+FetchContent_Declare(
+  processligand_repo
+  GIT_REPOSITORY https://github.com/NRGlab/Process_Ligand.git
+  GIT_TAG        cmake
 )
+
+set(CMAKE_BUILD_TYPE Release)
+set(BUILD_STATIC_EXECUTABLE ON)
+
+FetchContent_MakeAvailable(processligand_repo)
 
 set(PROCESSLIGAND_EXECUTABLE $<TARGET_FILE:ProcessLigand>)
 

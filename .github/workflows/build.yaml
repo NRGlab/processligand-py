@@ -4,6 +4,7 @@ on:
   push:
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+*'
+
 # Must commit, tag then push to start the build
 jobs:
   build:
@@ -43,10 +44,6 @@ jobs:
         env:
           CIBW_BUILD_VERBOSITY: 1
           CIBW_ARCHS: ${{ runner.os == 'macOS' && 'universal2' || 'auto64' }}
-          CIBW_ENVIRONMENT: 'CMAKE_ARGS="-DPROCESSLIGAND_EXE_PATH=./ProcessLigand_build/ProcessLigand"'
-          CIBW_BEFORE_BUILD_LINUX: "bash ./scripts/build_processligand_linux.sh"
-          CIBW_BEFORE_BUILD_MACOS: "bash ./scripts/build_processligand_macos.sh"
-          CIBW_BEFORE_BUILD_WINDOWS: "powershell ./scripts/build_processligand_windows.ps1"
 
 
       - name: Upload wheels as an Artifact
