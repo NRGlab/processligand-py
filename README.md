@@ -9,15 +9,19 @@ A Python package designed to prepare arguments and run `ProcessLigand`.
 ```
 from processligandpy import run_processligand
 
-result = run_processligand(f='path/to/target_or_ligand')
+# For a ligand
+result_ligand = run_processligand(file_path='path/to/target_or_ligand')
+
+# For a target:
+# result_target = run_processligand(file_path='path/to/target_or_ligand', target=True)
 
 # Using arguments:
-# result = run_processligand(f='path/to/target_or_ligand', target=True, atom_index=1)
+# result = run_processligand(file_path='path/to/target_or_ligand', atom_index=1)
 
-# Optional:
-output = result.stdout
-error = result.stderr
-returncode = result.returncode
+# Expanding the result:
+output = result_ligand.stdout
+error = result_ligand.stderr
+returncode = result_ligand.returncode
 ```
 
 ---
@@ -26,9 +30,9 @@ returncode = result.returncode
 
 ### Required Argument
 
-| Arg | Description                                        |
-|:----|:---------------------------------------------------|
-| `f` | Input file (not listed in the provided dictionary) |
+| Arg         | Description                                        |
+|:------------|:---------------------------------------------------|
+| `file_path` | Input file (not listed in the provided dictionary) |
 
 ### Optional Arguments
 

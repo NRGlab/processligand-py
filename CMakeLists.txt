@@ -1,9 +1,12 @@
 # CMakeLists.txt
 
 cmake_minimum_required(VERSION 3.15)
-project(processligand_builder C)
+project(processligand_builder C CXX)
 
 include(FetchContent)
+
+set(BUILD_STATIC_EXECUTABLE ON CACHE BOOL "Build static executable" FORCE)
+set(CMAKE_BUILD_TYPE Release)
 
 FetchContent_Declare(
   processligand_repo
@@ -11,10 +14,12 @@ FetchContent_Declare(
   GIT_TAG        cmake
 )
 
-set(CMAKE_BUILD_TYPE Release)
-set(BUILD_STATIC_EXECUTABLE ON)
+FetchContent_GetProperties(processligand_repo)
+if(NOT processligand_repo_POPULATED)
+  FetchContent_Populate(processligand_repo)
+endif()
 
-FetchContent_MakeAvailable(processligand_repo)
+add_subdirectory(${processligand_repo_SOURCE_DIR} ${processligand_repo_BINARY_DIR})
 
 set(PROCESSLIGAND_EXECUTABLE $<TARGET_FILE:ProcessLigand>)
 
@@ -23,7 +28,7 @@ install(PROGRAMS ${PROCESSLIGAND_EXECUTABLE}
 )
 
 install(FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/processligandpy/__init__.py
-    ${CMAKE_CURRENT_SOURCE_DIR}/processligandpy/processligand_wrapper.py
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/processligandpy/__init__.py
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/processligandpy/processligand_wrapper.py
     DESTINATION ${CMAKE_INSTALL_PREFIX}
 )
