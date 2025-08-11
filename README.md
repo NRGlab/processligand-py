@@ -22,6 +22,7 @@ result_ligand = run_processligand(file_path='path/to/target_or_ligand')
 output = result_ligand.stdout
 error = result_ligand.stderr
 returncode = result_ligand.returncode
+file_path_dict = result_ligand.file_path_dict
 ```
 
 ---
@@ -36,23 +37,25 @@ returncode = result_ligand.returncode
 
 ### Optional Arguments
 
-| Flag         | Value Type            | Description                          |
-|:-------------|:----------------------|:-------------------------------------|
-| `target`     | `<BOOL>`              | Parse a target                       |
-| `v`          | `<INT>`               | Verbose level                        |
-| `o`          | `<STR>`               | Output base filename                 |
-| `e`          | `<STR>`               | Residue to extract                   |
-| `c`          | `<STR>`               | Convert molecule to specified format |
-| `atom_index` | `<INT>`               | Starting atom index                  |
-| `res_name`   | `<STR>`               | 3-char ligand code                   |
-| `res_chain`  | `<CHAR>`              | Ligand chain                         |
-| `res_number` | `<INT>`               | Ligand number                        |
-| `force_gpa`  | `<INT>`               | Force reference atom                 |
-| `force_pcg`  | `<FLOAT FLOAT FLOAT>` | Force protein center of geometry     |
-| `hf`         | `<BOOL>`              | Include hydrogen flexible bonds      |
-| `wh`         | `<BOOL>`              | Add hydrogen atoms in output         |
-| `ref`        | `<BOOL>`              | Output final PDB from IC             |
-| `gen3D`      | `<BOOL>`              | Generate 3D conformation             |
+| Flag         | Value Type            | Description                                                 |
+|:-------------|:----------------------|:------------------------------------------------------------|
+| `target`     | `<BOOL>`              | Parse a target                                              |
+| `v`          | `<INT>`               | Verbose level                                               |
+| `o`          | `<STR>`               | Output base filename                                        |
+| `e`          | `<STR>`               | Residue to extract                                          |
+| `c`          | `<STR>`               | Convert molecule to specified format                        |
+| `atom_index` | `<INT>`               | Starting atom index                                         |
+| `res_name`   | `<STR>`               | 3-char ligand code                                          |
+| `res_chain`  | `<CHAR>`              | Ligand chain                                                |
+| `res_number` | `<INT>`               | Ligand number                                               |
+| `force_gpa`  | `<INT>`               | Force reference atom                                        |
+| `force_pcg`  | `<FLOAT FLOAT FLOAT>` | Force protein center of geometry                            |
+| `d`          | `<BOOL>`              | Deletes tmp files created when converting inout to mol2     |
+| `pf`         | `<BOOL>`              | Prints a line containing the filepath to every written file |
+| `hf`         | `<BOOL>`              | Include hydrogen flexible bonds                             |
+| `wh`         | `<BOOL>`              | Add hydrogen atoms in output                                |
+| `ref`        | `<BOOL>`              | Output final PDB from IC                                    |
+| `gen3D`      | `<BOOL>`              | Generate 3D conformation                                    |
 
 
 ---
@@ -67,6 +70,6 @@ returncode = result_ligand.returncode
 ---
 ### Returns
 
-| Type                  | Description                                                       |
-|:----------------------|:------------------------------------------------------------------|
-| `ProcessLigandResult` | A namedtuple containing `stdout`, `stderr`, and the `returncode`. |
+| Type                  | Description                                                                     |
+|:----------------------|:--------------------------------------------------------------------------------|
+| `ProcessLigandResult` | A namedtuple containing `stdout`, `stderr`, `returncode`, and `file_path_dict`. |

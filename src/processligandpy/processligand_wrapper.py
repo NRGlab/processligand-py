@@ -8,6 +8,8 @@ FLAG_MAP = {
     'o': '-o',
     'e': '-e',
     'c': '-c',
+    'd': '-d',
+    'pf': '-pf',
     'hf': '-hf',
     'wh': '-wh',
     'ref': '-ref',
@@ -21,7 +23,7 @@ FLAG_MAP = {
     'gen3D': '--gen3D',
 }
 
-ProcessLigandResult = namedtuple('ProcessResult', ['stdout', 'stderr', 'returncode'])
+ProcessLigandResult = namedtuple('ProcessResult', ['stdout', 'stderr', 'returncode', 'file_path_dict'])
 
 class ProcessLigandError(Exception):
     """Custom exception for errors related to the ProcessLigand."""
@@ -57,6 +59,8 @@ def run_processligand(file_path, **kwargs):
         'force_pcg': None,    # --force_pcg <FLOAT FLOAT FLOAT>: Force protein center of geometry
 
         # Boolean flags
+        'd': True,            # -d: Deletes tmp files created when converting inout to mol2
+        'pf': True,           # -pf: Prints a line containing the filepath to every written file
         'hf': False,          # -hf: Include hydrogen flexible bonds
         'wh': False,          # -wh: Add hydrogen atoms in output
         'ref': False,         # -ref: Output final PDB from IC
@@ -87,7 +91,15 @@ def run_processligand(file_path, **kwargs):
             capture_output=True,
             text=True
         )
-        return ProcessLigandResult(result.stdout, result.stderr, result.returncode)
+        file_path_dict = {}
+        for line in result.stdout.strip().split('\n'):
+            if line and line.find('written:') != -1:
+                key = line.split(' ')[0]
+                path = line.split(': ')[1].strip()
+                if key not in file_path_dict:
+                    file_path_dict[key] = []
+                file_path_dict[key].append(path)
+        return ProcessLigandResult(result.stdout, result.stderr, result.returncode, file_path_dict)
 
     except FileNotFoundError:
         raise ProcessLigandError(f"Executable not found at '{executable_path}'.")
