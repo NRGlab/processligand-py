@@ -42,7 +42,7 @@ def run_processligand(file_path, **kwargs):
         FileNotFoundError: If the required input file 'f' does not exist.
         ProcessLigandError: If the external process fails to execute.
     Returns:
-        ProcessLigandResult: A namedtuple containing stdout, stderr, and the returncode.
+        ProcessLigandResult: A namedtuple containing stdout, stderr, returncode and file_path_dict.
     """
     default_options = {
 

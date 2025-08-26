@@ -10,7 +10,7 @@ A Python package designed to prepare arguments and run `ProcessLigand`.
 from processligandpy import run_processligand
 
 # For a ligand
-result_ligand = run_processligand(file_path='path/to/target_or_ligand')
+result_ligand = run_processligand(file_path='path/to/target_or_ligand', atom_index=90000)
 
 # For a target:
 # result_target = run_processligand(file_path='path/to/target_or_ligand', target=True)
@@ -40,7 +40,7 @@ file_path_dict = result_ligand.file_path_dict
 | Flag         | Value Type            | Description                                                 |
 |:-------------|:----------------------|:------------------------------------------------------------|
 | `target`     | `<BOOL>`              | Parse a target                                              |
-| `v`          | `<INT>`               | Verbose level                                               |
+| `v`          | `<INT>`               | Verbose level (0 prints nothing. 1 prints everything)       |
 | `o`          | `<STR>`               | Output base filename                                        |
 | `e`          | `<STR>`               | Residue to extract                                          |
 | `c`          | `<STR>`               | Convert molecule to specified format                        |
